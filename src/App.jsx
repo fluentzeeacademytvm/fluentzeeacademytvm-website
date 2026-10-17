@@ -4,6 +4,10 @@ import {
   Clock3, Globe2, GraduationCap, Headphones, Menu, MessageCircle, Mic2,
   MoveUpRight, Quote, Sparkles, Star, Target, Users, X
 } from "lucide-react";
+import Testimonials from "./pages/Testimonials";
+import EnglishCoach from "./pages/EnglishCoach.jsx";
+import SocialMedia from "./pages/SocialMedia.jsx";
+import SocialFeed from "./pages/SocialFeed.jsx";
 
 const EMAIL = "fluentzeeacademytvm@gmail.com";
 // Replace this with your academy's WhatsApp number in international format,
@@ -124,6 +128,7 @@ function App() {
         <a className="brand" href="#home" onClick={closeMenu} aria-label="FluentZee Academy home">
           <img className="brand-logo" src="/fluentzee-logo.png" alt="FluentZee Academy logo" />
           <span className="brand-copy"><strong>FluentZee</strong><small>ACADEMY</small></span>
+        
         </a>
         <button className="menu-toggle" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X /> : <Menu />}
@@ -132,14 +137,25 @@ function App() {
           <a href="#home" onClick={closeMenu}>Home</a>
           <a href="#about" onClick={closeMenu}>About us</a>
           <a href="#courses" onClick={closeMenu}>Courses</a>
+          <a href="#english-coach" onClick={closeMenu}>AI grammar check</a>
           <a href="#why-us" onClick={closeMenu}>Why FluentZee</a>
+          <a href="#share" onClick={closeMenu}>Share</a>
+          <a href="#social-posts" onClick={closeMenu}>Social posts</a>
           <a href="#contact" onClick={closeMenu}>Contact</a>
+              
+
           <a className="nav-cta" href="#enquiry" onClick={closeMenu}>Enquire now <ArrowRight size={16} /></a>
         </nav>
       </header>
 
       <main>
         <section className="hero section-wrap" id="home">
+          <div className="hero-letter-cloud" aria-hidden="true">
+            <span className="hero-letter hero-letter-one">A</span>
+            <span className="hero-letter hero-letter-two">B</span>
+            <span className="hero-letter hero-letter-three">e</span>
+            <span className="hero-letter hero-letter-four">Z</span>
+          </div>
           <div className="hero-copy">
             <div className="eyebrow"><span className="eyebrow-dot" /> ENGLISH FOR YOUR NEXT BIG STEP</div>
             <h1>Your voice.<br />Your confidence.<br /><span>Your future.</span></h1>
@@ -185,7 +201,7 @@ function App() {
               </div>
             </div>
             <div className="about-text">
-              <p className="lead">At Fluentzee Academy, we believe the best way to learn English is to use it.</p>
+              <p className="lead">At FluentZee Academy, we believe the best way to learn English is to use it.</p>
               <p>Whether you’re starting from the basics, preparing for IELTS or looking to communicate more confidently at work, your goals matter. Our courses are designed to help you build useful skills through practice and consistent learning.</p>
               <div className="values-list">
                 <div><CheckCircle2 /><span><strong>Learn by doing</strong><small>Turn lessons into real-life communication.</small></span></div>
@@ -220,6 +236,9 @@ function App() {
           </div>
         </section>
 
+        <EnglishCoach />
+          <SocialMedia />
+
         <section className="puzzle-section section-pad" id="word-puzzle">
           <div className="section-wrap puzzle-layout">
             <div className="puzzle-intro">
@@ -245,7 +264,8 @@ function App() {
             </div>
           </div>
         </section>
-
+<Testimonials/>
+        <SocialFeed />
         <section className="why-section section-pad" id="why-us">
           <div className="section-wrap why-grid">
             <div className="why-copy">

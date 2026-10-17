@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 500" fill="none">
+  <defs>
+    <linearGradient id="top" x1="93" y1="13" x2="493" y2="124" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#102b68"/>
+      <stop offset=".72" stop-color="#0759c7"/>
+      <stop offset="1" stop-color="#087fe0"/>
+    </linearGradient>
+    <linearGradient id="swoosh" x1="118" y1="398" x2="506" y2="138" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#102b68"/>
+      <stop offset=".48" stop-color="#0878ed"/>
+      <stop offset="1" stop-color="#08c2df"/>
+    </linearGradient>
+    <linearGradient id="middle" x1="7" y1="270" x2="387" y2="290" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0872e5"/>
+      <stop offset="1" stop-color="#0755c7"/>
+    </linearGradient>
+    <linearGradient id="base" x1="103" y1="468" x2="491" y2="466" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0c367b"/>
+      <stop offset=".7" stop-color="#0875e8"/>
+      <stop offset="1" stop-color="#0757c7"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#top)" d="M204 0h291c-8 49-34 81-81 93l-167 4c-39 1-63 27-63 66v66H91v-86C91 56 139 0 204 0Z"/>
+  <path fill="url(#swoosh)" d="M197 107h323c-10 54-39 99-79 141L237 458c-24 25-58 39-97 39H62l270-293c14-15 7-27-13-27H197v-70Z"/>
+  <path fill="url(#middle)" d="M0 300c0-48 34-84 83-94l306-1c-11 39-36 63-76 73l-118 29c-31 8-49 29-49 61v54c-13 33-45 60-91 77V300H0Z"/>
+  <path fill="#102b68" d="M91 218c17-7 32-10 50-12h248c-11 39-36 63-76 73l-118 29c-31 8-49 29-49 61v54c-13 33-45 60-91 77V300c0-35 11-63 36-82Z" opacity=".82"/>
+  <path fill="url(#base)" d="M135 419h221c68 0 113 32 138 81-76-20-156-30-242-29H93c19-15 33-32 42-52Z"/>
+</svg>

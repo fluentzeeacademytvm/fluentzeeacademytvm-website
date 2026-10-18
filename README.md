@@ -50,6 +50,16 @@ Vite writes production files to `dist/`.
 7. Select **Deploy**. Vercel will provide a public `*.vercel.app` URL.
 8. After future pushes to the connected GitHub branch, Vercel will automatically rebuild and redeploy the website.
 
+## Instagram posts feed (Vercel)
+The Instagram grid uses Meta's official Instagram API through the Vercel serverless function in `api/instagram.js`. It requires an Instagram Business or Creator account, a Meta developer app configured for Instagram API with Instagram Login, and an access token with the `instagram_business_basic` permission. Meta does not charge for this API, but it requires setup and the token must be kept private.
+
+1. Set up Instagram API with Instagram Login for the FluentZee professional Instagram account and generate an access token. Follow Meta's current Instagram Platform setup guide.
+2. In Vercel, open the project's **Settings → Environment Variables** and add `INSTAGRAM_ACCESS_TOKEN` with the token. Optionally set `INSTAGRAM_GRAPH_API_VERSION` to a currently supported version; otherwise the endpoint uses `v25.0`.
+3. Redeploy the site after setting the variables. The social section loads 12 posts initially and offers **Load more posts** to page through the account's available media.
+4. For local testing, create `.env.local` from `.env.example`, add the token there, and run the project using the Vercel CLI (`vercel dev`) so the `/api/instagram` serverless function is available. Never commit `.env.local` or expose the token through a `VITE_` variable.
+
+The API uses Instagram Login's `/me/media` endpoint and requests only public feed media fields. Feed data is cached at the edge briefly; Instagram limits, token expiry, account permissions, and Meta API availability can affect the feed. Reauthorize or replace the token in Vercel if it expires.
+
 ## Alternative: Netlify
 1. Run `npm run build`.
 2. Sign in to Netlify and choose to add a new site.

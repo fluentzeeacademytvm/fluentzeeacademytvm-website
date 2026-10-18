@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   ArrowDownRight, ArrowRight, BookOpen, Check, CheckCircle2, ChevronDown,
   Clock3, Globe2, GraduationCap, Headphones, Menu, MessageCircle, Mic2,
@@ -8,6 +8,8 @@ import Testimonials from "./pages/Testimonials";
 import EnglishCoach from "./pages/EnglishCoach.jsx";
 import SocialMedia from "./pages/SocialMedia.jsx";
 import SocialFeed from "./pages/SocialFeed.jsx";
+import WordOfTheDay from "./pages/WordOfTheDay.jsx";
+import SpeakChallenge from "./pages/SpeakChallenge.jsx";
 
 const EMAIL = "fluentzeeacademytvm@gmail.com";
 // Replace this with your academy's WhatsApp number in international format,
@@ -72,7 +74,8 @@ function whatsappLink(message = "Hi Fluentzee Academy! I'd like to know more abo
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [formNotice, setFormNotice] = useState("");
+  const formRef = useRef(null);
   const [puzzleIndex, setPuzzleIndex] = useState(0);
   const [puzzleGuess, setPuzzleGuess] = useState("");
   const [puzzleSolved, setPuzzleSolved] = useState(false);
@@ -80,20 +83,47 @@ function App() {
   const [puzzleMessage, setPuzzleMessage] = useState("");
   const [form, setForm] = useState({ name: "", phone: "", email: "", course: "Spoken English", message: "" });
 
-  const update = (event) => setForm({ ...form, [event.target.name]: event.target.value });
+  const update = (event) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+    setFormNotice("");
+  };
   const submitEnquiry = (event) => {
     event.preventDefault();
+    if (!form.phone.trim()) {
+      setFormNotice("Add your phone number so the academy can reply to your WhatsApp enquiry.");
+      event.currentTarget.elements.phone.focus();
+      return;
+    }
+
     const message =
-      `Hello FluentZee Academy, I'd like to enquire about your courses.\n\n` +
+      `Hello FluentZee Academy, I'd like to enquire about ${form.course}.\n\n` +
       `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email || "Not provided"}\n` +
       `Course: ${form.course}\nMessage: ${form.message || "No additional message"}\n\n` +
       "Please contact me with more details.";
-    setSubmitted(true);
+    setFormNotice("Your WhatsApp enquiry is ready. Tap Send in WhatsApp to contact the academy.");
     window.open(
       whatsappLink(message),
       "_blank",
       "noopener,noreferrer"
     );
+  };
+
+  const emailEnquiry = () => {
+    if (!formRef.current.reportValidity()) return;
+    if (!form.email.trim()) {
+      setFormNotice("Enter your email address so we can prepare your email enquiry.");
+      formRef.current.elements.email.focus();
+      return;
+    }
+
+    const subject = `Course enquiry: ${form.course}`;
+    const body =
+      `Hello FluentZee Academy,\n\nI'd like to enquire about ${form.course}.\n\n` +
+      `Name: ${form.name}\nPhone: ${form.phone || "Not provided"}\n` +
+      `Course: ${form.course}\nMessage: ${form.message || "No additional message"}\n\n` +
+      "Please contact me with more details.";
+    setFormNotice("Your email app should open with your course enquiry ready to send.");
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const checkPuzzleAnswer = (event) => {
@@ -239,6 +269,9 @@ function App() {
         <EnglishCoach />
           <SocialMedia />
 
+        <WordOfTheDay />
+        <SpeakChallenge />
+
         <section className="puzzle-section section-pad" id="word-puzzle">
           <div className="section-wrap puzzle-layout">
             <div className="puzzle-intro">
@@ -303,21 +336,24 @@ function App() {
               <div className="contact-note"><Check size={15} /> No pressure. Just a conversation about your goals.</div>
             </div>
             <div className="form-card" id="enquiry">
-              <div className="form-heading"><span>YOUR NEXT CHAPTER</span><h3>Let’s get you started.</h3><p>Fill in the details and we’ll help you find the right course.</p></div>
-              {submitted && <div className="form-notice"><CheckCircle2 size={17} /> WhatsApp should open with your enquiry ready. Tap Send to complete your request.</div>}
-              <form onSubmit={submitEnquiry}>
+              <div className="form-heading"><span>QUICK ENQUIRY</span><h3>Choose a course to get started.</h3><p>Send your enquiry on WhatsApp, or use the same form to prepare an email.</p></div>
+              {formNotice && <div className="form-notice" role="status"><CheckCircle2 size={17} /> {formNotice}</div>}
+              <form ref={formRef} onSubmit={submitEnquiry}>
                 <label htmlFor="name">Your name <span>*</span></label>
                 <input id="name" name="name" value={form.name} onChange={update} placeholder="Enter your full name" required />
                 <div className="form-row">
-                  <div><label htmlFor="phone">Phone number <span>*</span></label><input id="phone" name="phone" type="tel" value={form.phone} onChange={update} placeholder="+91 ..." required /></div>
-                  <div><label htmlFor="email">Email address</label><input id="email" name="email" type="email" value={form.email} onChange={update} placeholder="you@example.com" /></div>
+                  <div><label htmlFor="phone">Phone number <span className="form-field-note">(for WhatsApp)</span></label><input id="phone" name="phone" type="tel" value={form.phone} onChange={update} placeholder="+91 ..." /></div>
+                  <div><label htmlFor="email">Email address <span className="form-field-note">(for email)</span></label><input id="email" name="email" type="email" value={form.email} onChange={update} placeholder="you@example.com" /></div>
                 </div>
                 <label htmlFor="course">Course you’re interested in <span>*</span></label>
                 <div className="select-wrap"><select id="course" name="course" value={form.course} onChange={update} required>{courses.map(c => <option key={c.title}>{c.title}</option>)}</select><ChevronDown size={17} /></div>
                 <label htmlFor="message">Anything you’d like us to know?</label>
                 <textarea id="message" name="message" value={form.message} onChange={update} placeholder="Tell us your goals (optional)" rows="3" />
-                <button className="button button-primary form-submit" type="submit">Send an enquiry <ArrowRight size={17} /></button>
-                <p className="form-privacy">By submitting, WhatsApp will open with these details ready to send to our academy.</p>
+                <div className="enquiry-actions">
+                  <button className="button button-primary form-submit" type="submit"><MessageCircle size={16} /> Continue on WhatsApp <ArrowRight size={17} /></button>
+                  <button className="button enquiry-email-button" type="button" onClick={emailEnquiry}>Prefer email? <ArrowRight size={16} /></button>
+                </div>
+                <p className="form-privacy">Your enquiry opens in WhatsApp or your email app for you to review and send.</p>
               </form>
             </div>
           </div>
